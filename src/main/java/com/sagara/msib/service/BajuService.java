@@ -15,4 +15,6 @@ public interface BajuService {
     public Baju getBajuById(Long id);
 
     public Baju updateBaju(Long id, CreateUpdateBajuRequest request);
+
+    public void deleteBaju(Long id);
 }

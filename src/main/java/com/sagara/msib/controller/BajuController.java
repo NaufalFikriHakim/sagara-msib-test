@@ -41,4 +41,10 @@ public class BajuController {
         return ResponseEntity.ok(response);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteBaju(@PathVariable Long id){
+        service.deleteBaju(id);
+        return ResponseEntity.ok().body("Berhasil");
+    }
+
 }

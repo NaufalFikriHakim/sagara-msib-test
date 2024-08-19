@@ -48,4 +48,10 @@ public class BajuServiceImpl implements BajuService{
 
         return repository.save(baju);
     }
+
+    @Override
+    public void deleteBaju(Long id) {
+        Baju baju = repository.findById(id).get();
+        repository.delete(baju);
+    }
 }
