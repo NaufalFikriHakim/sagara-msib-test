@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class BajuServiceImpl implements BajuService{
@@ -24,5 +26,8 @@ public class BajuServiceImpl implements BajuService{
                 .build());
     }
 
-
+    @Override
+    public List<Baju> getAllBaju() {
+        return repository.findAll();
+    }
 }
