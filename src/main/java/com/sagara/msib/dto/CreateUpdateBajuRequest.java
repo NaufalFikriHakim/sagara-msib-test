@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateBajuRequest {
+public class CreateUpdateBajuRequest {
     private String warna;
     private String ukuran;
     private Integer harga;

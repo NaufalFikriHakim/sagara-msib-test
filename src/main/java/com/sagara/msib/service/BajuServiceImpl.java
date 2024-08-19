@@ -1,6 +1,6 @@
 package com.sagara.msib.service;
 
-import com.sagara.msib.dto.CreateBajuRequest;
+import com.sagara.msib.dto.CreateUpdateBajuRequest;
 import com.sagara.msib.model.Baju;
 import com.sagara.msib.repository.BajuRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class BajuServiceImpl implements BajuService{
     private final BajuRepository repository;
 
     @Override
-    public Baju createBaju(CreateBajuRequest request) {
+    public Baju createBaju(CreateUpdateBajuRequest request) {
         return repository.save(Baju.builder()
                 .warna(request.getWarna())
                 .ukuran(request.getUkuran())
@@ -33,7 +33,19 @@ public class BajuServiceImpl implements BajuService{
 
     @Override
     public Baju getBajuById(Long id) {
-        //assuming the item is vali
+        //TODO: assuming the item is valid
         return repository.findById(id).get();
+    }
+
+    @Override
+    public Baju updateBaju(Long id, CreateUpdateBajuRequest request) {
+        Baju baju = repository.findById(id).get();
+
+        if (request.getHarga() != null) baju.setHarga(request.getHarga());
+        if (request.getUkuran() != null) baju.setUkuran(request.getUkuran());
+        if (request.getStok() != null) baju.setStok(request.getStok());
+        if (request.getWarna() != null) baju.setWarna(request.getWarna());
+
+        return repository.save(baju);
     }
 }

@@ -1,6 +1,6 @@
 package com.sagara.msib.controller;
 
-import com.sagara.msib.dto.CreateBajuRequest;
+import com.sagara.msib.dto.CreateUpdateBajuRequest;
 import com.sagara.msib.model.Baju;
 import com.sagara.msib.service.BajuService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class BajuController {
     private final BajuService service;
 
     @PostMapping("/create")
-    public ResponseEntity<Baju> createBaju(@RequestBody CreateBajuRequest request){
+    public ResponseEntity<Baju> createBaju(@RequestBody CreateUpdateBajuRequest request){
         Baju response = service.createBaju(request);
         return ResponseEntity.ok(response);
     }
@@ -32,6 +32,12 @@ public class BajuController {
     @GetMapping("/get/{id}")
     public ResponseEntity<Baju> getBajuById(@PathVariable Long id){
         Baju response = service.getBajuById(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/update/{id}") // use patch instead of put, so it can update specific value
+    public ResponseEntity<Baju> updateBaju(@PathVariable Long id, @RequestBody CreateUpdateBajuRequest request){
+        Baju response = service.updateBaju(id, request);
         return ResponseEntity.ok(response);
     }
 
