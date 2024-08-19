@@ -30,4 +30,10 @@ public class BajuServiceImpl implements BajuService{
     public List<Baju> getAllBaju() {
         return repository.findAll();
     }
+
+    @Override
+    public Baju getBajuById(Long id) {
+        //assuming the item is vali
+        return repository.findById(id).get();
+    }
 }

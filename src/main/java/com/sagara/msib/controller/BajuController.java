@@ -29,4 +29,10 @@ public class BajuController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/get/{id}")
+    public ResponseEntity<Baju> getBajuById(@PathVariable Long id){
+        Baju response = service.getBajuById(id);
+        return ResponseEntity.ok(response);
+    }
+
 }

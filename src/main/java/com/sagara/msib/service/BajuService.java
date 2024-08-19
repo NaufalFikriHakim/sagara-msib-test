@@ -11,4 +11,7 @@ public interface BajuService {
     public Baju createBaju(CreateBajuRequest request);
 
     public List<Baju> getAllBaju();
+
+    public Baju getBajuById(Long id);
+
 }
