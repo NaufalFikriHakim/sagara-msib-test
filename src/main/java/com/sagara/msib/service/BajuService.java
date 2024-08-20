@@ -19,4 +19,6 @@ public interface BajuService {
     public void deleteBaju(Long id);
 
     public Baju updateStokBaju(Long id, Integer jumlah);
+
+    public List<Baju> search(String warna, String ukuran);
 }

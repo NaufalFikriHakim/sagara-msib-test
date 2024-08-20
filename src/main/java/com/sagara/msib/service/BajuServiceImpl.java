@@ -19,8 +19,8 @@ public class BajuServiceImpl implements BajuService{
     @Override
     public Baju createBaju(CreateUpdateBajuRequest request) {
         return repository.save(Baju.builder()
-                .warna(request.getWarna())
-                .ukuran(request.getUkuran())
+                .warna(request.getWarna().toLowerCase())
+                .ukuran(request.getUkuran().toLowerCase())
                 .harga(request.getHarga())
                 .stok(request.getStok())
                 .build());
@@ -43,9 +43,9 @@ public class BajuServiceImpl implements BajuService{
         Baju baju = repository.findById(id).get();
 
         if (request.getHarga() != null) baju.setHarga(request.getHarga());
-        if (request.getUkuran() != null) baju.setUkuran(request.getUkuran());
+        if (request.getUkuran() != null) baju.setUkuran(request.getUkuran().toLowerCase());
         if (request.getStok() != null) baju.setStok(request.getStok());
-        if (request.getWarna() != null) baju.setWarna(request.getWarna());
+        if (request.getWarna() != null) baju.setWarna(request.getWarna().toLowerCase());
 
         return repository.save(baju);
     }
@@ -65,5 +65,20 @@ public class BajuServiceImpl implements BajuService{
         baju.setStok(baju.getStok() + jumlah);
 
         return repository.save(baju);
+    }
+
+    @Override
+    public List<Baju> search(String warna, String ukuran) {
+        List<Baju> baju;
+        if (warna != null && ukuran != null){
+            baju = repository.findBajuByWarnaAndUkuran(warna, ukuran);
+        } else if (warna != null) {
+            baju = repository.findBajuByWarna(warna);
+        } else if (ukuran != null) {
+            baju = repository.findBajuByUkuran(ukuran);
+        } else {
+            baju = repository.findAll();
+        }
+        return baju;
     }
 }
