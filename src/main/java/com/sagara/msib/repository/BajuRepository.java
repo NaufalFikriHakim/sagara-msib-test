@@ -24,4 +24,10 @@ public interface BajuRepository extends JpaRepository<Baju, Long> {
 
     @Query(value = "SELECT * FROM BAJU WHERE ukuran = :ukuran AND warna = :warna", nativeQuery = true)
     List<Baju> findBajuByWarnaAndUkuran(@Param("warna") String warna, @Param("ukuran") String ukuran);
+
+    @Query(value = "SELECT * FROM BAJU WHERE stok = 0", nativeQuery = true)
+    List<Baju> findBajuByStokHabis();
+
+    @Query(value = "SELECT * FROM BAJU WHERE stok < 5", nativeQuery = true)
+    List<Baju> findBajuByStokKurang();
 }

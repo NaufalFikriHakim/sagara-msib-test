@@ -21,4 +21,8 @@ public interface BajuService {
     public Baju updateStokBaju(Long id, Integer jumlah);
 
     public List<Baju> search(String warna, String ukuran);
+
+    public List<Baju> getStokHabis();
+
+    public List<Baju> getStokKurang();
 }

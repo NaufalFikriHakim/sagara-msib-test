@@ -81,4 +81,14 @@ public class BajuServiceImpl implements BajuService{
         }
         return baju;
     }
+
+    @Override
+    public List<Baju> getStokHabis() {
+        return repository.findBajuByStokHabis();
+    }
+
+    @Override
+    public List<Baju> getStokKurang() {
+        return repository.findBajuByStokKurang();
+    }
 }

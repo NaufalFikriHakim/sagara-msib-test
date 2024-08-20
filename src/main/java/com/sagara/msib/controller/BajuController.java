@@ -55,7 +55,19 @@ public class BajuController {
 
     @GetMapping("/search")
     public ResponseEntity<List<Baju>> search(@RequestParam(required = false) String warna, @RequestParam(required = false) String ukuran){
-        List<Baju> response = service.search(warna.toLowerCase(), ukuran.toLowerCase());
+        List<Baju> response = service.search(warna, ukuran);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/habis")
+    public ResponseEntity<List<Baju>> getHabis(){
+        List<Baju> response = service.getStokHabis();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/kurang")
+    public ResponseEntity<List<Baju>> getKurang(){
+        List<Baju> response = service.getStokKurang();
         return ResponseEntity.ok(response);
     }
 
