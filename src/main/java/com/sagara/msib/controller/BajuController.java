@@ -47,4 +47,10 @@ public class BajuController {
         return ResponseEntity.ok().body("Berhasil");
     }
 
+    @PatchMapping("/stok/{id}")  // use patch to update specific value(stok)
+    public ResponseEntity<Baju> updateStok(@PathVariable Long id, @RequestParam Integer jumlah){ // use request param
+        Baju response = service.updateStokBaju(id, jumlah);
+        return ResponseEntity.ok(response);
+    }
+
 }

@@ -17,4 +17,6 @@ public interface BajuService {
     public Baju updateBaju(Long id, CreateUpdateBajuRequest request);
 
     public void deleteBaju(Long id);
+
+    public Baju updateStokBaju(Long id, Integer jumlah);
 }
