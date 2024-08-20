@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ public class BajuServiceImpl implements BajuService{
 
     @Override
     public Baju createBaju(CreateUpdateBajuRequest request) {
+        if (request.getHarga() <= 0 || request.getStok() <= 0)return null;
         return repository.save(Baju.builder()
                 .warna(request.getWarna().toLowerCase())
                 .ukuran(request.getUkuran().toLowerCase())
@@ -33,14 +35,16 @@ public class BajuServiceImpl implements BajuService{
 
     @Override
     public Baju getBajuById(Long id) {
-        //TODO: id is item valid
-        return repository.findById(id).get();
+        Optional<Baju> response = repository.findById(id);
+        return response.orElse(null);
     }
 
     @Override
     public Baju updateBaju(Long id, CreateUpdateBajuRequest request) {
-        // TODO: validate id
-        Baju baju = repository.findById(id).get();
+        Optional<Baju> response = repository.findById(id);
+        if (response.isEmpty()) return null;
+
+        Baju baju = response.get();
 
         if (request.getHarga() != null) baju.setHarga(request.getHarga());
         if (request.getUkuran() != null) baju.setUkuran(request.getUkuran().toLowerCase());
@@ -51,16 +55,21 @@ public class BajuServiceImpl implements BajuService{
     }
 
     @Override
-    public void deleteBaju(Long id) {
-        //TODO: validate id
-        Baju baju = repository.findById(id).get();
-        repository.delete(baju);
+    public boolean deleteBaju(Long id) {
+        Optional<Baju> response = repository.findById(id);
+        if (response.isEmpty()) return false;
+        repository.delete(response.get());
+        return true;
     }
 
     @Override
     public Baju updateStokBaju(Long id, Integer jumlah) {
         //TODO: validate biar jumlah baju selalu lebih besar dari 0
-        Baju baju = repository.findById(id).get();
+        Optional<Baju> response = repository.findById(id);
+        if (response.isEmpty())return null; // can be improved by throwing exception
+        Baju baju = response.get();
+
+        if (baju.getStok() + jumlah < 0) return null;
 
         baju.setStok(baju.getStok() + jumlah);
 

@@ -4,6 +4,7 @@ import com.sagara.msib.dto.CreateUpdateBajuRequest;
 import com.sagara.msib.model.Baju;
 import com.sagara.msib.service.BajuService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ public class BajuController {
     @PostMapping("/create")
     public ResponseEntity<Baju> createBaju(@RequestBody CreateUpdateBajuRequest request){
         Baju response = service.createBaju(request);
+        if (response == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(response);
     }
 
@@ -32,24 +34,28 @@ public class BajuController {
     @GetMapping("/get/{id}")
     public ResponseEntity<Baju> getBajuById(@PathVariable Long id){
         Baju response = service.getBajuById(id);
+        if (response == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/update/{id}") // use patch instead of put, so it can update specific value
     public ResponseEntity<Baju> updateBaju(@PathVariable Long id, @RequestBody CreateUpdateBajuRequest request){
         Baju response = service.updateBaju(id, request);
+        if (response == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteBaju(@PathVariable Long id){
-        service.deleteBaju(id);
+        Boolean success = service.deleteBaju(id);
+        if (!success) return ResponseEntity.notFound().build();
         return ResponseEntity.ok().body("Berhasil");
     }
 
     @PatchMapping("/stok/{id}")  // use patch to update specific value(stok)
     public ResponseEntity<Baju> updateStok(@PathVariable Long id, @RequestParam Integer jumlah){ // use request param
         Baju response = service.updateStokBaju(id, jumlah);
+        if (response == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(response);
     }
 
